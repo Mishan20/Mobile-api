@@ -1,32 +1,24 @@
-package com.mobile.api.entity;
+package com.mobile.api.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Mobile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class MobileDTO {
     private Integer id;
     private String brand;
     private String model;
     private int ram;
     private double price;
 
-    public Mobile() {
+    public MobileDTO() {
     }
 
-    public Mobile(String brand, String model, int ram, double price) {
+    public MobileDTO(Integer id, String brand, String model, int ram, double price) {
+        this.id = id;
         this.brand = brand;
         this.model = model;
         this.ram = ram;
         this.price = price;
     }
 
-    public Mobile(Integer id, String brand, String model, int ram, double price) {
-        this.id = id;
+    public MobileDTO(String brand, String model, int ram, double price) {
         this.brand = brand;
         this.model = model;
         this.ram = ram;
