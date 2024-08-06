@@ -27,21 +27,33 @@ public class MobileController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Object> get(@PathVariable Integer id){
-        return null;
+        List<Mobile> mobile = mobileService.getMobile(id);
+        if(mobile != null){
+            return new ResponseEntity<>(mobile, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Data Not Found", HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/getAll")
-    public List<Mobile> getAll(){
-        return null;
+    public List<MobileDTO> getAll(){
+        List<MobileDTO> mobiles = mobileService.getAllMobiles();
+        return mobiles;
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody Mobile mobile){
-        return null;
+    public ResponseEntity<Object> update(@RequestBody MobileDTO mobile ,@PathVariable Integer id ){
+        MobileDTO mobileDTO = mobileService.updateMobile(mobile, id);
+        if(mobileDTO != null){
+            return new ResponseEntity<>(mobileDTO, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Data Not Found", HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id){
-        return null;
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
+        String deleteData = mobileService.deleteMobile(id);
+        return new ResponseEntity<>(deleteData, HttpStatus.OK);
     }
 }
