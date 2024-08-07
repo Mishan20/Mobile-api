@@ -1,6 +1,8 @@
 package com.mobile.api.service;
 
+import com.mobile.api.dto.ChargerDTO;
 import com.mobile.api.dto.MobileDTO;
+import com.mobile.api.entity.Charger;
 import com.mobile.api.entity.Mobile;
 import com.mobile.api.repository.MobileRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import java.util.Optional;
 @Service
 public class MobileService {
 
-    @Autowired
+    @Autowired // This means to get the bean called mobileRepo
     private MobileRepo mobileRepo;
 
     public MobileDTO saveMobile(MobileDTO mobile) {
@@ -26,6 +28,7 @@ public class MobileService {
         List<Mobile> mobiles = new ArrayList<>();
         mobiles.add(byId.get());
         return mobiles;
+        // Optional is a container object which may or may not contain a non-null value
     }
 
     public List<MobileDTO> getAllMobiles() {
@@ -65,6 +68,24 @@ public class MobileService {
         } else {
             return "Data Not Found";
         }
+
+    }
+
+    public MobileDTO saveMobileWithChargers(MobileDTO mobileDTO) {
+       //convert chagerDTO to charger entity
+        List<Charger> chargers = new ArrayList<>();
+        for (ChargerDTO chargerDTO : mobileDTO.getChargers()) {
+            chargers.add(new Charger(chargerDTO.getBrand(), chargerDTO.getWattage()));
+        }
+        Mobile save = mobileRepo.save(new Mobile(mobileDTO.getBrand(), mobileDTO.getModel(), mobileDTO.getRam(), mobileDTO.getPrice(), chargers));
+
+        //convert charger entity to chargerDTO
+        List<ChargerDTO> chargerDTOS = new ArrayList<>();
+        for (Charger entity : save.getChargers()) {
+            chargerDTOS.add(new ChargerDTO(entity.getId(), entity.getBrand(), entity.getWattage()));
+        }
+
+        return new MobileDTO(save.getId(), save.getBrand(), save.getModel(), save.getRam(), save.getPrice(), chargerDTOS);
 
     }
 }

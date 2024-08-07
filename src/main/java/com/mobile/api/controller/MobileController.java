@@ -12,20 +12,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/mobile")
+@RestController // This means that this class is a Controller
+@RequestMapping("/api/mobile") // This means URL's start with /api/mobile (after Application path)
 public class MobileController {
 
-    @Autowired
+    @Autowired // This means to get the bean called mobileRepo
     MobileService mobileService;
 
-    @PostMapping("/save")
+    @PostMapping("/save") // Map ONLY POST Requests
     public ResponseEntity<MobileDTO> save(@RequestBody MobileDTO mobile){
         MobileDTO mobileDTO = mobileService.saveMobile(mobile);
         return new ResponseEntity<>(mobileDTO, HttpStatus.CREATED);
+        // @RequestBody means it is a JSON object
+        // ResponseEntity is used to return response with status code
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/{id}") // Map ONLY GET Requests
     public ResponseEntity<Object> get(@PathVariable Integer id){
         List<Mobile> mobile = mobileService.getMobile(id);
         if(mobile != null){
@@ -33,6 +35,7 @@ public class MobileController {
         }else {
             return new ResponseEntity<>("Data Not Found", HttpStatus.NOT_FOUND);
         }
+        // @PathVariable means it is a parameter from the URL path /get/{id} -> /get/1 -> id = 1
     }
 
     @GetMapping("/getAll")
@@ -55,5 +58,11 @@ public class MobileController {
     public ResponseEntity<String> delete(@PathVariable Integer id) {
         String deleteData = mobileService.deleteMobile(id);
         return new ResponseEntity<>(deleteData, HttpStatus.OK);
+    }
+
+    @PostMapping("/saveWithChargers")
+    public ResponseEntity<MobileDTO> saveMobileWithChargers(@RequestBody MobileDTO mobile){
+        MobileDTO mobileDTO = mobileService.saveMobileWithChargers(mobile);
+        return new ResponseEntity<>(mobileDTO, HttpStatus.CREATED);
     }
 }

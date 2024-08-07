@@ -1,11 +1,24 @@
 package com.mobile.api.dto;
 
+import java.util.List;
+
 public class MobileDTO {
     private Integer id;
     private String brand;
     private String model;
     private int ram;
     private double price;
+
+    private List<ChargerDTO> chargers;
+
+    public MobileDTO(Integer id, String brand, String model, int ram, double price, List<ChargerDTO> chargers) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.ram = ram;
+        this.price = price;
+        this.chargers = chargers;
+    }
 
     public MobileDTO() {
     }
@@ -63,5 +76,13 @@ public class MobileDTO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<ChargerDTO> getChargers() {
+        return chargers;
+    }
+
+    public void setChargers(List<ChargerDTO> chargers) {
+        this.chargers = chargers;
     }
 }

@@ -1,9 +1,8 @@
 package com.mobile.api.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Mobile {
@@ -14,6 +13,18 @@ public class Mobile {
     private String model;
     private int ram;
     private double price;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "mobile_id")
+    private List<Charger> chargers;
+
+    public Mobile(String brand, String model, int ram, double price, List<Charger> chargers) {
+        this.brand = brand;
+        this.model = model;
+        this.ram = ram;
+        this.price = price;
+        this.chargers = chargers;
+    }
 
     public Mobile() {
     }
@@ -71,5 +82,13 @@ public class Mobile {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<Charger> getChargers() {
+        return chargers;
+    }
+
+    public void setChargers(List<Charger> chargers) {
+        this.chargers = chargers;
     }
 }
