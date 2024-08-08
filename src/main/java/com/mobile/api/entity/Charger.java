@@ -1,9 +1,6 @@
 package com.mobile.api.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Charger {
@@ -13,6 +10,10 @@ public class Charger {
     Integer id;
     private String brand;
     private double wattage;
+
+    @ManyToOne
+    @JoinColumn(name = "mobile_id")
+    private Mobile mobile;
 
     public Charger() {
     }

@@ -13,9 +13,9 @@ public class Mobile {
     private String model;
     private int ram;
     private double price;
+    private String imagePath;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "mobile_id")
+    @OneToMany( mappedBy = "mobile" ,  cascade = CascadeType.ALL)
     private List<Charger> chargers;
 
     public Mobile(String brand, String model, int ram, double price, List<Charger> chargers) {
@@ -90,5 +90,13 @@ public class Mobile {
 
     public void setChargers(List<Charger> chargers) {
         this.chargers = chargers;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

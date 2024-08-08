@@ -8,8 +8,8 @@ public class MobileDTO {
     private String model;
     private int ram;
     private double price;
-
     private List<ChargerDTO> chargers;
+    private String imagePath;
 
     public MobileDTO(Integer id, String brand, String model, int ram, double price, List<ChargerDTO> chargers) {
         this.id = id;
@@ -36,6 +36,15 @@ public class MobileDTO {
         this.model = model;
         this.ram = ram;
         this.price = price;
+    }
+
+    public MobileDTO(Integer id, String brand, String model, int ram, double price, String imagePath) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.ram = ram;
+        this.price = price;
+        this.imagePath = imagePath;
     }
 
     public Integer getId() {
@@ -84,5 +93,13 @@ public class MobileDTO {
 
     public void setChargers(List<ChargerDTO> chargers) {
         this.chargers = chargers;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

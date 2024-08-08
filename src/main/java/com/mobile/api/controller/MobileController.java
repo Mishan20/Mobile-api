@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +65,12 @@ public class MobileController {
     @PostMapping("/saveWithChargers")
     public ResponseEntity<MobileDTO> saveMobileWithChargers(@RequestBody MobileDTO mobile){
         MobileDTO mobileDTO = mobileService.saveMobileWithChargers(mobile);
+        return new ResponseEntity<>(mobileDTO, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/uploadImage/{id}")
+    public ResponseEntity<MobileDTO> uploadImage(@RequestParam("file") MultipartFile file, @PathVariable Integer id) throws IOException {
+        MobileDTO mobileDTO = mobileService.uploadImage(file, id);
         return new ResponseEntity<>(mobileDTO, HttpStatus.CREATED);
     }
 }

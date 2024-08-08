@@ -7,7 +7,12 @@ import com.mobile.api.entity.Mobile;
 import com.mobile.api.repository.MobileRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -87,5 +92,18 @@ public class MobileService {
 
         return new MobileDTO(save.getId(), save.getBrand(), save.getModel(), save.getRam(), save.getPrice(), chargerDTOS);
 
+    }
+
+    public MobileDTO uploadImage(MultipartFile file, Integer id) throws IOException {
+        String fileName = file.getOriginalFilename();
+        Path uploadPath = Paths.get("uploads/", fileName);
+        Files.createDirectories(uploadPath.getParent());
+        Files.write(uploadPath, file.getBytes());
+
+        Mobile mobile = mobileRepo.findById(id).get();
+        mobile.setImagePath(uploadPath.toString());
+        Mobile save = mobileRepo.save(mobile);
+
+        return new MobileDTO(save.getId(), save.getBrand(), save.getModel(), save.getRam(), save.getPrice(), save.getImagePath());
     }
 }
