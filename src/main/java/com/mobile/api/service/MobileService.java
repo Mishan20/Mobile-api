@@ -106,4 +106,10 @@ public class MobileService {
 
         return new MobileDTO(save.getId(), save.getBrand(), save.getModel(), save.getRam(), save.getPrice(), save.getImagePath());
     }
+
+    public byte[] getImage(Integer id) throws IOException {
+        Mobile mobile = mobileRepo.findById(id).get();
+        Path imagePath = Paths.get(mobile.getImagePath());
+        return Files.readAllBytes(imagePath);
+    }
 }
